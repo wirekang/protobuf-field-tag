@@ -11,8 +11,8 @@ import (
 
 func main() {
 	flag.Usage = func() {
-		flag.CommandLine.Output()
-		fmt.Fprintf(flag.CommandLine.Output(), "prototag [flags] file\n")
+		flag.CommandLine.SetOutput(os.Stdout)
+		fmt.Printf("prototag [flags] file\n")
 		flag.PrintDefaults()
 	}
 
