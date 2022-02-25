@@ -10,8 +10,8 @@ type Message struct {
 
 type Struct struct {
 	Name      string   `json:"name,omitempty"`
-	Fields    []*Field `json:"fields,omitempty"`
 	Tags      []*Tag   `json:"tags,omitempty"`
+	Fields    []*Field `json:"fields,omitempty"`
 	isCached  bool
 	nameField map[string]*Field
 	keyTag    map[string]*Tag
