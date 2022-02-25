@@ -2,12 +2,18 @@ syntax = "proto3";
 package packagename;
 option some = "thing";
 
+// Some comments
+// ignored `key34:"value" key295:"value 2"`
+// `key:"value" key2:"value 2"`
 enum Enum1 {
   Asdf = 0; // `asdf:"value" qwer:"valuefor qwer"`
   Qwer = 1;
   Zsdf = 2; // `wrong syntax = 123`
 }
 
+// asdf
+// `ignore:"asdf"`
+//
 message Message1 {
   string first = 1; // (before comments) `json:"omitempty,foo,string" int:"123"` (after comments)
   string second = 2; // no tags

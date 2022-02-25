@@ -24,6 +24,8 @@ func Parse(r io.Reader) (m *Model, err error) {
 
 	rv := &rootVisitor{}
 	p.Accept(rv)
+	// You can tag messages or enums
+	//
 	m = &Model{
 		Messages: rv.messages,
 		Enums:    rv.enums,

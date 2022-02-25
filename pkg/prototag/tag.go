@@ -9,8 +9,8 @@ import (
 )
 
 type Tag struct {
-	Key   string   `json:"key"`
-	Value TagValue `json:"value"`
+	Key   string   `json:"key,omitempty"`
+	Value TagValue `json:"value,omitempty"`
 }
 
 type TagValue string

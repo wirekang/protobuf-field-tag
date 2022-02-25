@@ -24,6 +24,7 @@ func TestReader(t *testing.T) {
 		msg.Cache()
 		assert.Equal(t, msg.Name, "Message1")
 		assert.Len(t, msg.Fields, 4)
+		assert.Len(t, msg.Tags, 0)
 
 		assertFields(t, &msg.Struct, []string{"first", "second", "t", "asdf"}, []int{1, 2, 4, 8})
 		assert.Len(t, msg.Fields[0].Tags, 2)
@@ -45,6 +46,13 @@ func TestReader(t *testing.T) {
 		assert.Len(t, m.Enums, 1)
 		enum := m.Enums[0]
 		enum.Cache()
+		assert.Len(t, enum.Tags, 2)
+		assert.Equal(t, enum.Tags[0].Key, "key")
+		assert.Equal(t, enum.Tags[1].Key, "key2")
+
+		assert.Equal(t, string(enum.Tags[0].Value), "value")
+		assert.Equal(t, string(enum.Tags[1].Value), "value 2")
+
 		assert.Equal(t, enum.Name, "Enum1")
 		assert.Len(t, enum.Fields, 3)
 		assertFields(t, &enum.Struct, []string{"Asdf", "Qwer", "Zsdf"}, []int{0, 1, 2})

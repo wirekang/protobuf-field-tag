@@ -9,39 +9,54 @@ type Message struct {
 }
 
 type Struct struct {
-	Name      string   `json:"name"`
-	Fields    []*Field `json:"fields"`
+	Name      string   `json:"name,omitempty"`
+	Fields    []*Field `json:"fields,omitempty"`
+	Tags      []*Tag   `json:"tags,omitempty"`
 	isCached  bool
 	nameField map[string]*Field
+	keyTag    map[string]*Tag
 }
 
 type Field struct {
-	Name     string `json:"name"`
-	Number   int    `json:"number"`
-	Tags     []*Tag `json:"tags"`
+	Name     string `json:"name,omitempty"`
+	Number   int    `json:"number,omitempty"`
+	Tags     []*Tag `json:"tags,omitempty"`
 	isCached bool
 	keyTag   map[string]*Tag
 }
 
-func (m *Struct) Cache() {
-	if m.isCached {
+func (s *Struct) Cache() {
+	if s.isCached {
 		return
 	}
 
-	m.isCached = true
-	m.nameField = make(map[string]*Field, len(m.Fields))
-	for _, field := range m.Fields {
+	s.isCached = true
+	s.keyTag = make(map[string]*Tag, len(s.Tags))
+	for _, tag := range s.Tags {
+		s.keyTag[tag.Key] = tag
+	}
+
+	s.nameField = make(map[string]*Field, len(s.Fields))
+	for _, field := range s.Fields {
 		field.Cache()
-		m.nameField[field.Name] = field
+		s.nameField[field.Name] = field
 	}
 }
 
-func (m *Struct) Field(name string) *Field {
-	if !m.isCached {
+func (s *Struct) Field(name string) *Field {
+	if !s.isCached {
 		return nil
 	}
 
-	return m.nameField[name]
+	return s.nameField[name]
+}
+
+func (s *Struct) Tag(key string) *Tag {
+	if !s.isCached {
+		return nil
+	}
+
+	return s.keyTag[key]
 }
 
 func (f *Field) Cache() {

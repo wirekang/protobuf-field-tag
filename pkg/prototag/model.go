@@ -1,8 +1,8 @@
 package prototag
 
 type Model struct {
-	Messages    []*Message `json:"messages"`
-	Enums       []*Enum    `json:"enums"`
+	Messages    []*Message `json:"messages,omitempty"`
+	Enums       []*Enum    `json:"enums,omitempty"`
 	nameMessage map[string]*Message
 	nameEnum    map[string]*Enum
 	isCached    bool

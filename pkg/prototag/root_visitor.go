@@ -10,22 +10,28 @@ type rootVisitor struct {
 	enums    []*Enum
 }
 
+func newStruct(name string, comments []*parser.Comment, fields []*Field) Struct {
+	var c *parser.Comment
+	if len(comments) > 1 {
+		c = comments[len(comments)-1]
+	}
+	return Struct{
+		Name:   name,
+		Fields: fields,
+		Tags:   makeTags(c),
+	}
+}
+
 func (v *rootVisitor) VisitMessage(msg *parser.Message) bool {
-	m := &Message{}
-	m.Name = msg.MessageName
 	mv := &messageVisitor{}
 	msg.Accept(mv)
-	m.Fields = mv.fields
-	v.messages = append(v.messages, m)
+	v.messages = append(v.messages, &Message{Struct: newStruct(msg.MessageName, msg.Comments, mv.fields)})
 	return true
 }
 
 func (v *rootVisitor) VisitEnum(enum *parser.Enum) bool {
-	e := &Enum{}
-	e.Name = enum.EnumName
 	ev := &enumVisitor{}
 	enum.Accept(ev)
-	e.Fields = ev.fields
-	v.enums = append(v.enums, e)
+	v.enums = append(v.enums, &Enum{Struct: newStruct(enum.EnumName, enum.Comments, ev.fields)})
 	return true
 }

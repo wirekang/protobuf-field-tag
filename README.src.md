@@ -11,27 +11,10 @@ for go modules
 
 ## Example
 *example.proto*
-```protobuf
-syntax = "proto3";
-package example;
+<code language="proto3">
+syntax="proto3";
+</code>
 
-message Person {
-  string name = 1; // insert key:"value" in backticks like go `json:"foo" xml:"bar"`
-  int32 id = 2;  // comments not in backticks will be ignored
-  string email = 3; // use can escape double quotes `key:"va\"u\"es"`
-
-  enum PhoneType {
-    MOBILE = 0; // "not backtick"
-    HOME = 1; // `key:"value" key2:"value for key2"`
-    WORK = 2; // `wrong:syntax:will:be:ignored`
-  }
-}
-
-message AddressBook {
-  repeated Person people = 1;
-}
-
-```
 
 ### CLI
 ```shell
