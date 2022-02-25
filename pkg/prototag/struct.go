@@ -1,26 +1,26 @@
 package prototag
 
 type Enum struct {
-	Struct
+	Struct `yaml:"struct,inline"`
 }
 
 type Message struct {
-	Struct
+	Struct `yaml:"struct,inline"`
 }
 
 type Struct struct {
-	Name      string   `json:"name,omitempty"`
-	Tags      []*Tag   `json:"tags,omitempty"`
-	Fields    []*Field `json:"fields,omitempty"`
+	Name      string   `json:"name" yaml:"name"`
+	Tags      []*Tag   `json:"tags" yaml:"tags"`
+	Fields    []*Field `json:"fields" yaml:"fields"`
 	isCached  bool
 	nameField map[string]*Field
 	keyTag    map[string]*Tag
 }
 
 type Field struct {
-	Name     string `json:"name,omitempty"`
-	Number   int    `json:"number,omitempty"`
-	Tags     []*Tag `json:"tags,omitempty"`
+	Name     string `json:"name" yaml:"name"`
+	Number   int    `json:"number" yaml:"number"`
+	Tags     []*Tag `json:"tags" yaml:"tags"`
 	isCached bool
 	keyTag   map[string]*Tag
 }

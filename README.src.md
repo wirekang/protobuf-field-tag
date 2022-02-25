@@ -29,6 +29,10 @@ for go modules
 ##CLI3##
 ```
 
+```shell
+##CLI4##
+```
+
 ### Go
 
 ```go

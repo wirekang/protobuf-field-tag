@@ -7,6 +7,7 @@ import (
 	"os"
 
 	"github.com/wirekang/prototag/pkg/prototag"
+	"gopkg.in/yaml.v3"
 )
 
 func main() {
@@ -18,6 +19,7 @@ func main() {
 
 	outputFile := flag.String("o", "", "output to file")
 	isJson := flag.Bool("j", false, "json output")
+	isYaml := flag.Bool("y", false, "yaml output")
 	isPretty := flag.Bool("p", false, "pretty output")
 	isDebug := flag.Bool("d", false, "debug mode")
 	flag.Parse()
@@ -63,9 +65,11 @@ func main() {
 		} else {
 			out, err = json.Marshal(*m)
 		}
-		if err != nil {
-			return
-		}
+	} else if *isYaml {
+		out, err = yaml.Marshal(*m)
+	}
+	if err != nil {
+		return
 	}
 
 	fmt.Printf("%s\n", out)

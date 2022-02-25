@@ -48,12 +48,13 @@ prototag [flags] [file or stdin]
   -o string
     	output to file
   -p	pretty output
+  -y	yaml output
 
 ```
 
 ```shell
 $ prototag -j < example.proto 
-{"messages":[{"name":"Person","tags":[{"key":"type","value":"1"}],"fields":[{"name":"name","number":1,"tags":[{"key":"json","value":"foo"},{"key":"xml","value":"bar"}]},{"name":"id","number":2},{"name":"email","number":3,"tags":[{"key":"key","value":"va\"u\"es"}]}]},{"name":"AddressBook","fields":[{"name":"people","number":1}]}],"enums":[{"name":"PhoneType","tags":[{"key":"k","value":"v"}],"fields":[{"name":"MOBILE"},{"name":"HOME","number":1,"tags":[{"key":"key","value":"value"},{"key":"key2","value":"value for key2"}]},{"name":"WORK","number":2}]}]}
+{"messages":[{"name":"Person","tags":[{"key":"type","value":"1"}],"fields":[{"name":"name","number":1,"tags":[{"key":"json","value":"foo"},{"key":"xml","value":"bar"}]},{"name":"id","number":2,"tags":[]},{"name":"email","number":3,"tags":[{"key":"key","value":"va\"u\"es"}]}]},{"name":"AddressBook","tags":[],"fields":[{"name":"people","number":1,"tags":[]}]}],"enums":[{"name":"PhoneType","tags":[{"key":"k","value":"v"}],"fields":[{"name":"MOBILE","number":0,"tags":[]},{"name":"HOME","number":1,"tags":[{"key":"key","value":"value"},{"key":"key2","value":"value for key2"}]},{"name":"WORK","number":2,"tags":[]}]}]}
 
 ```
 
@@ -86,7 +87,8 @@ $ prototag -j -p example.proto
                 },
                 {
                     "name": "id",
-                    "number": 2
+                    "number": 2,
+                    "tags": []
                 },
                 {
                     "name": "email",
@@ -102,10 +104,12 @@ $ prototag -j -p example.proto
         },
         {
             "name": "AddressBook",
+            "tags": [],
             "fields": [
                 {
                     "name": "people",
-                    "number": 1
+                    "number": 1,
+                    "tags": []
                 }
             ]
         }
@@ -121,7 +125,9 @@ $ prototag -j -p example.proto
             ],
             "fields": [
                 {
-                    "name": "MOBILE"
+                    "name": "MOBILE",
+                    "number": 0,
+                    "tags": []
                 },
                 {
                     "name": "HOME",
@@ -139,12 +145,65 @@ $ prototag -j -p example.proto
                 },
                 {
                     "name": "WORK",
-                    "number": 2
+                    "number": 2,
+                    "tags": []
                 }
             ]
         }
     ]
 }
+
+```
+
+```shell
+$ prototag -y example.proto 
+messages:
+  - name: Person
+    tags:
+      - key: type
+        value: "1"
+    fields:
+      - name: name
+        number: 1
+        tags:
+          - key: json
+            value: foo
+          - key: xml
+            value: bar
+      - name: id
+        number: 2
+        tags: []
+      - name: email
+        number: 3
+        tags:
+          - key: key
+            value: va"u"es
+  - name: AddressBook
+    tags: []
+    fields:
+      - name: people
+        number: 1
+        tags: []
+enums:
+  - name: PhoneType
+    tags:
+      - key: k
+        value: v
+    fields:
+      - name: MOBILE
+        number: 0
+        tags: []
+      - name: HOME
+        number: 1
+        tags:
+          - key: key
+            value: value
+          - key: key2
+            value: value for key2
+      - name: WORK
+        number: 2
+        tags: []
+
 
 ```
 

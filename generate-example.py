@@ -30,7 +30,8 @@ kv = {
     "GO_OUT": go_out,
     "CLI1": pcmd("--help"),
     "CLI2": pcmd("-j < example.proto"),
-    "CLI3": pcmd("-j -p example.proto")
+    "CLI3": pcmd("-j -p example.proto"),
+    "CLI4": pcmd("-y example.proto")
 }
 for k in kv:
     rst = rst.replace("##"+k+"##", kv[k])
