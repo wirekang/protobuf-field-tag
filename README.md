@@ -36,7 +36,7 @@ message AddressBook {
 ### CLI
 ```shell
 $ prototag
-prototag [flags] file
+prototag [flags] [file or stdin]
   -d    debug mode
   -j    json output
   -o string
@@ -44,7 +44,7 @@ prototag [flags] file
   -p    pretty output
 ```
 ```shell
-$ prototag -j example.proto
+$ prototag -j example.proto # same with `prototag -j < example.proto`
 {"messages":[{"name":"Person","fields":[{"name":"name","number":1,"tags":[{"key":"json","value":"foo"},{"key":"xml","value":"bar"}]},{"name":"id","number":2,"tags":[]},{"name":"email","number":3,"tags":[{"key":"key","value":"va\"u\"es"}]}]},{"name":"AddressBook","fields":[{"name":"people","number":1,"tags":[]}]}],"enums":[{"name":"PhoneType","fields":[{"name":"MOBILE","number":0,"tags":[]},{"name":"HOME","number":1,"tags":[{"key":"key","value":"value"},{"key":"key2","value":"value for key2"}]},{"name":"WORK","number":2,"tags":[]}]}]}
 ```
 ```shell

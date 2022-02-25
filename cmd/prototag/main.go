@@ -40,13 +40,18 @@ func main() {
 		}
 	}()
 
-	if flag.NArg() != 1 {
+	if flag.NArg() > 1 {
 		flag.Usage()
 		return
 	}
 
-	targetFile := flag.Arg(0)
-	m, err := prototag.ParseFile(targetFile)
+	var m *prototag.Model
+	if flag.NArg() == 1 {
+		targetFile := flag.Arg(0)
+		m, err = prototag.ParseFile(targetFile)
+	} else {
+		m, err = prototag.Parse(os.Stdin)
+	}
 	if err != nil {
 		return
 	}
