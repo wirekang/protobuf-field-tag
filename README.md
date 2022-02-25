@@ -42,7 +42,7 @@ message AddressBook {
 
 ```shell
 $ prototag --help 
-prototag [flags] file
+prototag [flags] [file or stdin]
   -d	debug mode
   -j	json output
   -o string

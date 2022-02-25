@@ -12,7 +12,7 @@ import (
 func main() {
 	flag.Usage = func() {
 		flag.CommandLine.SetOutput(os.Stdout)
-		fmt.Printf("prototag [flags] file\n")
+		fmt.Printf("prototag [flags] [file or stdin]\n")
 		flag.PrintDefaults()
 	}
 
