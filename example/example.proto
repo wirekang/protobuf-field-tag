@@ -1,0 +1,23 @@
+syntax = "proto3";
+package example;
+
+// You can tag message or enum
+// Only last line will parsed
+// `type:"1"`
+message Person {
+  string name  = 1;  // insert key:"value" in backticks like go `json:"foo" xml:"bar"`
+  int32  id    = 2;  // comments not in backticks will be ignored
+  string email = 3;  // use can escape double quotes `key:"va\"u\"es"`
+
+  // `key:"value"` this will be ignored
+  // `k:"v"`
+  enum PhoneType {
+    MOBILE = 0;  // "not backtick"
+    HOME   = 1;  // `key:"value" key2:"value for key2"`
+    WORK   = 2;  // `wrong:syntax:will:be:ignored`
+  }
+}
+
+message AddressBook {
+  repeated Person people = 1;
+}
