@@ -31,6 +31,7 @@ func (m *Struct) Cache() {
 	m.isCached = true
 	m.nameField = make(map[string]*Field, len(m.Fields))
 	for _, field := range m.Fields {
+		field.Cache()
 		m.nameField[field.Name] = field
 	}
 }
