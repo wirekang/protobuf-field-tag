@@ -28,14 +28,19 @@ kv = {
     "PROTO": open("example/example.proto").read(),
     "GO": open("example/main.go").read(),
     "GO_OUT": go_out,
-    "CLI1": pcmd("--help"),
-    "CLI2": pcmd("-j < example.proto"),
-    "CLI3": pcmd("-j -p example.proto"),
-    "CLI4": pcmd("-y example.proto")
 }
 for k in kv:
     rst = rst.replace("##"+k+"##", kv[k])
 
+clis = [pcmd("--help"),
+        pcmd("-j < example.proto"),
+        pcmd("-jp example.proto"),
+        pcmd("-y example.proto"),
+        pcmd("-jpa example.proto")]
+
+cli = "".join(map(lambda c: "```bash\n"+c+"\n```\n", clis))
+
+rst = rst.replace("##CLI##", cli)
 
 target = open("README.md", "w")
 target.write(rst)

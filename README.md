@@ -40,26 +40,25 @@ message AddressBook {
 
 ### CLI
 
-```shell
+```bash
 $ prototag --help 
 prototag [flags] [file or stdin]
-  -d, --debug           debug mode
-      --help            
-  -j, --json            json output
-  -o, --output string   output to file
-  -p, --pretty          pretty output
-  -y, --yaml            yaml output
+  -a, --array messages   return merged array of messages any `enums`
+  -d, --debug            debug mode
+      --help             
+  -j, --json             json output
+  -o, --output string    output to file
+  -p, --pretty           pretty output
+  -y, --yaml             yaml output
 
 ```
-
-```shell
+```bash
 $ prototag -j < example.proto 
 {"messages":[{"name":"Person","tags":[{"key":"type","value":"1"}],"fields":[{"name":"name","number":1,"tags":[{"key":"json","value":"foo"},{"key":"xml","value":"bar"}]},{"name":"id","number":2,"tags":[]},{"name":"email","number":3,"tags":[{"key":"key","value":"va\"u\"es"}]}]},{"name":"AddressBook","tags":[],"fields":[{"name":"people","number":1,"tags":[]}]}],"enums":[{"name":"PhoneType","tags":[{"key":"k","value":"v"}],"fields":[{"name":"MOBILE","number":0,"tags":[]},{"name":"HOME","number":1,"tags":[{"key":"key","value":"value"},{"key":"key2","value":"value for key2"}]},{"name":"WORK","number":2,"tags":[]}]}]}
 
 ```
-
-```shell
-$ prototag -j -p example.proto 
+```bash
+$ prototag -jp example.proto 
 {
     "messages": [
         {
@@ -154,8 +153,7 @@ $ prototag -j -p example.proto
 }
 
 ```
-
-```shell
+```bash
 $ prototag -y example.proto 
 messages:
   - name: Person
@@ -206,8 +204,102 @@ enums:
 
 
 ```
+```bash
+$ prototag -jpa example.proto 
+[
+    {
+        "name": "Person",
+        "tags": [
+            {
+                "key": "type",
+                "value": "1"
+            }
+        ],
+        "fields": [
+            {
+                "name": "name",
+                "number": 1,
+                "tags": [
+                    {
+                        "key": "json",
+                        "value": "foo"
+                    },
+                    {
+                        "key": "xml",
+                        "value": "bar"
+                    }
+                ]
+            },
+            {
+                "name": "id",
+                "number": 2,
+                "tags": []
+            },
+            {
+                "name": "email",
+                "number": 3,
+                "tags": [
+                    {
+                        "key": "key",
+                        "value": "va\"u\"es"
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "name": "AddressBook",
+        "tags": [],
+        "fields": [
+            {
+                "name": "people",
+                "number": 1,
+                "tags": []
+            }
+        ]
+    },
+    {
+        "name": "PhoneType",
+        "tags": [
+            {
+                "key": "k",
+                "value": "v"
+            }
+        ],
+        "fields": [
+            {
+                "name": "MOBILE",
+                "number": 0,
+                "tags": []
+            },
+            {
+                "name": "HOME",
+                "number": 1,
+                "tags": [
+                    {
+                        "key": "key",
+                        "value": "value"
+                    },
+                    {
+                        "key": "key2",
+                        "value": "value for key2"
+                    }
+                ]
+            },
+            {
+                "name": "WORK",
+                "number": 2,
+                "tags": []
+            }
+        ]
+    }
+]
+
+```
+
 
 ### Go
+
 
 ```go
 package main

@@ -17,23 +17,10 @@ for go modules
 
 ### CLI
 
-```shell
-##CLI1##
-```
-
-```shell
-##CLI2##
-```
-
-```shell
-##CLI3##
-```
-
-```shell
-##CLI4##
-```
+##CLI##
 
 ### Go
+
 
 ```go
 ##GO##

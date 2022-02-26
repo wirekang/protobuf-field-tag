@@ -23,6 +23,7 @@ func main() {
 	isYaml := pflag.BoolP("yaml", "y", false, "yaml output")
 	isPretty := pflag.BoolP("pretty", "p", false, "pretty output")
 	isDebug := pflag.BoolP("debug", "d", false, "debug mode")
+	isArray := pflag.BoolP("array", "a", false, "return merged array of `messages` any `enums`")
 	help := pflag.Bool("help", false, "")
 	pflag.Parse()
 
@@ -65,16 +66,31 @@ func main() {
 		return
 	}
 
+	var input interface{} = *m
 	var out []byte
+
+	if *isArray {
+		var arr []prototag.Struct
+		for _, message := range m.Messages {
+			arr = append(arr, message.Struct)
+		}
+
+		for _, enum := range m.Enums {
+			arr = append(arr, enum.Struct)
+		}
+		input = arr
+	}
+
 	if *isJson {
 		if *isPretty {
-			out, err = json.MarshalIndent(*m, "", "    ")
+			out, err = json.MarshalIndent(input, "", "    ")
 		} else {
-			out, err = json.Marshal(*m)
+			out, err = json.Marshal(input)
 		}
 	} else if *isYaml {
-		out, err = yaml.Marshal(*m)
+		out, err = yaml.Marshal(input)
 	}
+
 	if err != nil {
 		return
 	}
