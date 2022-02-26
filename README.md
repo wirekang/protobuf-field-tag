@@ -43,12 +43,12 @@ message AddressBook {
 ```shell
 $ prototag --help 
 prototag [flags] [file or stdin]
-  -d	debug mode
-  -j	json output
-  -o string
-    	output to file
-  -p	pretty output
-  -y	yaml output
+  -d, --debug           debug mode
+      --help            
+  -j, --json            json output
+  -o, --output string   output to file
+  -p, --pretty          pretty output
+  -y, --yaml            yaml output
 
 ```
 

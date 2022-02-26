@@ -2,27 +2,34 @@ package main
 
 import (
 	"encoding/json"
-	"flag"
 	"fmt"
 	"os"
+
+	"github.com/spf13/pflag"
 
 	"github.com/wirekang/prototag/pkg/prototag"
 	"gopkg.in/yaml.v3"
 )
 
 func main() {
-	flag.Usage = func() {
-		flag.CommandLine.SetOutput(os.Stdout)
+	pflag.Usage = func() {
+		pflag.CommandLine.SetOutput(os.Stdout)
 		fmt.Printf("prototag [flags] [file or stdin]\n")
-		flag.PrintDefaults()
+		pflag.PrintDefaults()
 	}
 
-	outputFile := flag.String("o", "", "output to file")
-	isJson := flag.Bool("j", false, "json output")
-	isYaml := flag.Bool("y", false, "yaml output")
-	isPretty := flag.Bool("p", false, "pretty output")
-	isDebug := flag.Bool("d", false, "debug mode")
-	flag.Parse()
+	outputFile := pflag.StringP("output", "o", "", "output to file")
+	isJson := pflag.BoolP("json", "j", false, "json output")
+	isYaml := pflag.BoolP("yaml", "y", false, "yaml output")
+	isPretty := pflag.BoolP("pretty", "p", false, "pretty output")
+	isDebug := pflag.BoolP("debug", "d", false, "debug mode")
+	help := pflag.Bool("help", false, "")
+	pflag.Parse()
+
+	if *help {
+		pflag.Usage()
+		os.Exit(0)
+	}
 
 	var err error
 	defer func() {
@@ -36,20 +43,20 @@ func main() {
 			if *isDebug {
 				panic(reason)
 			} else {
-				fmt.Printf("%+v\n", reason)
+				fmt.Fprintf(os.Stderr, "%+v\n", reason)
 				os.Exit(1)
 			}
 		}
 	}()
 
-	if flag.NArg() > 1 {
-		flag.Usage()
+	if pflag.NArg() > 1 {
+		pflag.Usage()
 		return
 	}
 
 	var m *prototag.Model
-	if flag.NArg() == 1 {
-		targetFile := flag.Arg(0)
+	if pflag.NArg() == 1 {
+		targetFile := pflag.Arg(0)
 		m, err = prototag.ParseFile(targetFile)
 	} else {
 		m, err = prototag.Parse(os.Stdin)
