@@ -50,7 +50,7 @@ func main() {
 		}
 	}()
 
-	if (*isJson && !*isYaml) || pflag.NArg() > 1 {
+	if (!*isJson && !*isYaml) || pflag.NArg() > 1 {
 		pflag.Usage()
 		return
 	}
