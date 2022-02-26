@@ -23,7 +23,7 @@ func main() {
 	isYaml := pflag.BoolP("yaml", "y", false, "yaml output")
 	isPretty := pflag.BoolP("pretty", "p", false, "pretty output")
 	isDebug := pflag.BoolP("debug", "d", false, "debug mode")
-	isArray := pflag.BoolP("array", "a", false, "return merged array of `messages` any `enums`")
+	isArray := pflag.BoolP("array", "a", false, "return merged array of 'messages' any 'enums'")
 	help := pflag.Bool("help", false, "")
 	pflag.Parse()
 
@@ -50,7 +50,7 @@ func main() {
 		}
 	}()
 
-	if pflag.NArg() > 1 {
+	if (*isJson && !*isYaml) || pflag.NArg() > 1 {
 		pflag.Usage()
 		return
 	}
