@@ -12,7 +12,7 @@ type rootVisitor struct {
 
 func newStruct(name string, comments []*parser.Comment, fields []*Field) Struct {
 	var c *parser.Comment
-	if len(comments) > 1 {
+	if len(comments) > 0 {
 		c = comments[len(comments)-1]
 	}
 	return Struct{
